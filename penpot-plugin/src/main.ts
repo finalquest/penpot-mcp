@@ -42,7 +42,9 @@ function connectToMcpServer(): void {
     }
 
     try {
-        ws = new WebSocket("ws://localhost:4402");
+        // Use environment variable for MCP WebSocket URL, fallback to localhost for local development
+        const mcpWsUrl = import.meta.env.VITE_MCP_WS_URL || "ws://localhost:4402";
+        ws = new WebSocket(mcpWsUrl);
         updateConnectionStatus("Connecting...", false);
 
         ws.onopen = () => {
